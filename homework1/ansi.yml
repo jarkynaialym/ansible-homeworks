@@ -1,15 +1,67 @@
-- hosts: all 
+
+- hosts: 138.197.68.39  
   tasks:  
   - name: Install a list of packages
-    yum:
+    apt:
      name:
       - apache2
       - git
-      - wget
+      - tree
      state: latest
 
-  - name: Start apache
+  - name: Start apache2
     service:
       name: apache2
       state: started
       enabled: yes 
+
+  - name: create group kaizen
+    group:
+      name: kaizen
+      state: present
+
+  - name: create devops
+    group:
+      name: devops
+      state: present
+
+  - name: create group qa
+    group:
+      name: qa
+      state: present
+
+  - name: create user jkk and add user to group
+    user:
+      name: jkk
+      group: kaizen
+      append: yes   
+
+  - name: create user jkk and add user to group
+    user:
+      name: jkk
+      group: qa
+      append: yes  
+       
+
+  - name: Create the user tester and add to the qa group
+    user:
+      name: tester
+      group: qa
+      state: present
+
+  - name: Copy files from Homework1 folder to remote ubuntu machine
+    copy:
+     src: "./"
+     dest: /root/     
+     
+  #  - name: create groups kaizen, devops, qa
+  #   group:
+  #     name: 
+  #      - kaizen
+  #     state: present
+  #     name:
+  #      - devops
+  #     state: present
+  #     name:
+   #      - qa
+  #     state: present
