@@ -1,0 +1,43 @@
+- hosts: all
+  tasks:
+  - name: Install httpd, wget, unzip, epel-release, and mysql
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - httpd
+      - wget
+      - unzip
+      - epel-release
+      - mysql
+      - php 
+      - php-mysql
+
+  
+  - name:  remi-release-7.rpm
+    get_url:
+      url: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+      dest: "/tmp/remi-release-7.rpm"
+      state: present
+  
+  - name: Enable remi-php74 repository
+     command: yum-config-manager --enable remi-php74
+     ignore_errors: yes
+
+
+
+
+
+
+
+  - name: Start apache and enable it 
+    service:
+      name: httpd
+      state: started
+      enabled: yes    
+
+  - name: Start mysql and make it enable
+    service:
+      name: mariadb-server 
+      state: started
+      enabled: yes        
