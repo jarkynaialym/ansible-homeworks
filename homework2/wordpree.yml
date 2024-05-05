@@ -1,5 +1,0 @@
- - name: Download and Extract WorPress
-      unarchive:
-        src: https://wordpress.org/latest.tar.gz
-        dest: /var/www/
-        remote_src: yes
